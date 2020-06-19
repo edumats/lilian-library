@@ -62,6 +62,10 @@ body {
 }
 
 
+/* Book Details */
+#book-image {
+    height: 50vh;
+}
 
 /* .sidebar-nav {
     margin-top: 20px;
