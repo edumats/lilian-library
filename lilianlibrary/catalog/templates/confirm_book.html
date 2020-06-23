@@ -3,32 +3,40 @@
 {% block title %}<title>Lilian's Library: Add book</title>{% endblock %}
 
 {% block content%}
-    <div class="container h-100">
+        {% if success is True %}
+        <div class="container h-100">
+            <img id="book-image" class="img-fluid float-right mt-3 mr-4 ml-2 mb-2" src="{{ thumbnail }}" />
+            <div class="mt-4 ml-2">
+                <h3 class="font-weight-bold">{{ title }}</h3>
+                <p>
+                    {% for author in authors %}
+                        <span>{{ author }}</span>
+                    {% endfor %}
+                </p>
+                <p>Ed: {{ publisher }}</p>
+                <p>Published: {{ published_date }}</p>
+                <p>{{ isbn }}</p>
+                <p>Language: {{ language }} ({{ print_type }})</p>
+                <p>Categories:
+                    {% for category in categories %}
+                        <span>{{ category }}</span>
+                    {% endfor %}
+                </p>
+                <p>{{ description }}</p>
+            </div>
 
-        <img id="book-image" class="img-fluid float-right mt-3 mr-4 ml-2 mb-2" src="{{ thumbnail }}" />
-        <div class="mt-4 ml-2">
-            <h3 class="font-weight-bold">{{ title }}</h3>
-            <p>
-                {% for author in authors %}
-                    <span>{{ author }}</span>
-                {% endfor %}
-            </p>
-            <p>Ed: {{ publisher }}</p>
-            <p>Published: {{ publised_date }}</p>
-            <p>{{ isbn }}</p>
-            <p>Language: {{ language }} ({{ print_type }})</p>
-            <p>Categories:
-                {% for category in categories %}
-                    <span>{{ category }}</span>
-                {% endfor %}
-            </p>
-            <p>{{ description }}</p>
+            <div class="text-center">
+                <a class="btn btn-primary" href="#" name="ok">Add to Library</a>
+                <a class="btn btn-danger" href="{% url 'add' %}" name="no">Go back</a>
+
+            </div>
         </div>
-
-        <div class="text-center">
-            <a class="btn btn-primary" href="#" name="ok">Add to Library</a>
-            <a class="btn btn-danger" href="{% url 'add' %}" name="no">Go back</a>
-
-        </div>
-    </div>
+        {% else %}
+            <div class="alert alert-danger" role="alert">
+                No book with the provided ISBN was found
+            </div>
+            <div class="container h-100">
+                <a class="btn btn-primary" href="{% url 'add' %}" name="no">Go back</a>
+            </div>
+        {% endif %}
 {% endblock %}
