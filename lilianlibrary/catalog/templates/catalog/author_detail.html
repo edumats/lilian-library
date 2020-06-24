@@ -2,16 +2,22 @@
 
 
 {% block content %}
-    <h1>{{ author.first_name }} {{ author.last_name }}</h1>
+    <div class="container h-100 mt-2">
+        <h1>{{ author.name }}</h1>
 
-    <div style="margin-left:20px;margin-top:20px">
-        <h4>Available books</h4>
+        <div style="margin-left:20px;margin-top:20px">
+            <h4>Available books</h4>
 
-        {% for book in author.book_set.all %}
-            <hr>
-            <p><strong>Title:</strong> {{ book.title }}</p>
-            <p><strong>Genre:</strong> {{ book.display_genre }}</p>
-            <p class="text-muted"><strong>Language</strong> {{ book.language }}</p>
-        {% endfor %}
+            {% for book in author.books.all %}
+                <hr>
+                <p>
+                    <strong>Title:</strong>
+                    <a href="{{ book.get_absolute_url }}">{{ book.title }}</a>
+                </p> 
+
+                <p><strong>Genre:</strong> {{ book.display_genre }}</p>
+                <p class="text-muted"><strong>Language</strong> {{ book.language }}</p>
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}

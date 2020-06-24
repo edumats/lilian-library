@@ -1,15 +1,10 @@
 from django.contrib import admin
-from .models import Author, Book, BookInstance, Genre, Language
+from .models import Author, Book, BookInstance, Genre, Language, Publisher
 
-
-# class BookInline(admin.TabularInline):
-#     model = Book
-#     extra = 0
 
 @admin.register(Author)
 class AuthorAdmin(admin.ModelAdmin):
-    list_display = ('last_name', 'first_name', 'date_of_birth', 'date_of_death')
-    # inlines = [BookInline]
+    list_display = ('name',)
 
 class BookInstanceInline(admin.TabularInline):
     model = BookInstance
@@ -25,8 +20,7 @@ class BookInstanceAdmin(admin.ModelAdmin):
     list_display = ('book', 'status', 'due_back')
     list_filter = ('status', 'due_back')
 
-# admin.site.register(Author, AuthorAdmin)
-# admin.site.register(Book, BookAdmin)
-# admin.site.register(BookInstance, BookInstanceAdmin)
+
 admin.site.register(Genre)
 admin.site.register(Language)
+admin.site.register(Publisher)

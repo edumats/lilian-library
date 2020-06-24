@@ -61,6 +61,10 @@ body {
     font-size: 1.2em;
 }
 
+/* Right Side Content */
+.container-scroll {
+    overflow: scroll;
+}
 
 /* Book Details */
 #book-image {
