@@ -11,11 +11,18 @@ class Author(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ['name']
+
 
 class Book(models.Model):
+    # Only title is required
     title = models.CharField(max_length=250)
-    authors = models.ManyToManyField('Author', related_name='books')
-    isbn = models.CharField('ISBN', max_length=13, help_text='ISBN')
+    authors = models.ManyToManyField('Author', related_name='books', blank=True)
+    # When data is inserted, it must be unique.
+    # It can also be left as blank without unique contraint violation
+    isbn_10 = models.CharField('ISBN 10', max_length=10, help_text='ISBN 10', unique=True, blank=True, null=True)
+    isbn_13 = models.CharField('ISBN 13', max_length=13, help_text='ISBN 13', blank=True)
     genre = models.ManyToManyField('Genre', help_text='Genre(s) of the book', blank=True, related_name='books')
     description = models.TextField(max_length=1000, blank=True)
     language = models.ForeignKey('Language', on_delete=models.SET_NULL, null=True, blank=True)
@@ -26,13 +33,6 @@ class Book(models.Model):
     average_rating = models.FloatField(blank=True, null=True)
     ratings_count = models.IntegerField(blank=True, null=True)
     thumbnail = models.URLField(blank=True)
-
-    MEDIA_CHOICES = [
-        ('B', 'Book'),
-        ('E', 'E-Book'),
-        ('A', 'Audiobook'),
-    ]
-    media_type = models.CharField(max_length=1, choices=MEDIA_CHOICES, default="B")
 
     def info_link(self):
         return f"https://books.google.com.br/books?id={google_id}=isbn:{isbn}"
@@ -48,6 +48,9 @@ class Book(models.Model):
 
     display_genre.short_description = 'Genre'
 
+    class Meta:
+        ordering = ['title']
+
 
 class Genre(models.Model):
     name = models.CharField(max_length=200, help_text='Book genre')
@@ -62,6 +65,13 @@ class BookInstance(models.Model):
     book = models.ForeignKey('Book', on_delete=models.SET_NULL, null=True)
     due_back = models.DateField(null=True, blank=True)
     location = models.CharField(max_length=50)
+
+    MEDIA_CHOICES = [
+        ('B', 'Book'),
+        ('E', 'E-Book'),
+        ('A', 'Audiobook'),
+    ]
+    media_type = models.CharField(max_length=1, choices=MEDIA_CHOICES, default="B")
 
     LOAN_STATUS = (
         ('a', 'Available'),
@@ -80,7 +90,7 @@ class BookInstance(models.Model):
     )
 
     def __str__(self):
-        return f'ID: {self.id} - Title: {self.book.title}'
+        return f'ID: {self.id} - Title:'
 
 
 class Language(models.Model):

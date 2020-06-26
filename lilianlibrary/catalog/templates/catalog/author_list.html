@@ -1,18 +1,22 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <h1>Authors</h1>
-    {% if author_list %}
-        <ul>
-            {% for author in author_list %}
-                <li>
-                <a href="{{ author.get_absolute_url }}">
-                    {{ author.last_name }}, {{ author.first_name }}
-                </a>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No authors available.</p>
-    {% endif %}
+    <div class="container h-100 mt-2">
+        {% if author_list %}
+            <h1>Authors</h1>
+            <ul>
+                {% for author in author_list %}
+                    <li>
+                    <a href="{{ author.get_absolute_url }}">
+                        {{ author.name }}
+                    </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No authors available.</p>
+        {% endif %}
+    </div>
+
+
 {% endblock %}

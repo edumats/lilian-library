@@ -2,7 +2,7 @@
 
 
 {% block content %}
-    <div class="container h-100 mt-2">
+    <div class="container h-100 mt-2 container-scroll">
         <h1>{{ author.name }}</h1>
 
         <div style="margin-left:20px;margin-top:20px">
@@ -10,10 +10,11 @@
 
             {% for book in author.books.all %}
                 <hr>
+                <img class="img-fluid book-thumb-small float-right" src="{{ book.thumbnail }}" />
                 <p>
                     <strong>Title:</strong>
                     <a href="{{ book.get_absolute_url }}">{{ book.title }}</a>
-                </p> 
+                </p>
 
                 <p><strong>Genre:</strong> {{ book.display_genre }}</p>
                 <p class="text-muted"><strong>Language</strong> {{ book.language }}</p>

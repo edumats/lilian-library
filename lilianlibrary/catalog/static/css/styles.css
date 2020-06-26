@@ -71,6 +71,10 @@ body {
     height: 50vh;
 }
 
+.book-thumb-small {
+    height: 10vw;
+}
+
 /* .sidebar-nav {
     margin-top: 20px;
     padding: 0;
