@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Author, Book, BookInstance, Genre, Language, Publisher
+from .models import Author, Book, BookInstance, Genre, Language, Publisher, Quote
 
 
 @admin.register(Author)
@@ -24,3 +24,4 @@ class BookInstanceAdmin(admin.ModelAdmin):
 admin.site.register(Genre)
 admin.site.register(Language)
 admin.site.register(Publisher)
+admin.site.register(Quote)

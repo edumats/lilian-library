@@ -1,6 +1,9 @@
 {% extends "layout.html" %}
 
 {% block content %}
-    <p>Logged out!</p>
-    <a href="{% url 'login'%}">Click here to login again.</a>
+    <div class="container h-100 mt-2">
+        <p>Logged out!</p>
+        <a href="{% url 'login'%}">Click here to login again.</a>
+    </div>
+
 {% endblock %}

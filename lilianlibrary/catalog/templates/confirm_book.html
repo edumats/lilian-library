@@ -8,28 +8,19 @@
                 <img id="book-image" class="img-fluid float-right mt-3 mr-4 ml-2 mb-2" src="{{ thumbnail }}" />
                 <div class="mt-4 ml-2">
                     <h3 class="font-weight-bold">{{ title }}</h3>
-                    <p>
-                        {% for author in authors %}
-                            <span>{{ author }}</span>
-                        {% endfor %}
-                    </p>
+                    <p>{{ authors|join:", " }}</p>
                     <p>Ed: {{ publisher }}</p>
                     <p>Published: {{ published_date }}</p>
                     <p>{{ isbn }}</p>
                     <p>Language: {{ language }} ({{ print_type }})</p>
-                    <p>
-                        Categories:
-                        {% for category in categories %}
-                            {{ categories }}
-                        {% endfor %}
-                    </p>
+                    <p>Categories: {{ categories|join:"," }}</p>
                     <p>{{ description }}</p>
                 </div>
 
                 <form id="form-confirm" action="{% url 'add' %}" method="post">
                     {% csrf_token %}
                 </form>
-                <div class="text-center">
+                <div class="text-center mb-3">
                     <a class="btn btn-danger" href="{% url 'add' %}" name="no">Go back</a>
 
                     <input class="btn btn-primary" type="submit" form="form-confirm" value="Send">

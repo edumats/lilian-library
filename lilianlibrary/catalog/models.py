@@ -90,7 +90,7 @@ class BookInstance(models.Model):
     )
 
     def __str__(self):
-        return f'ID: {self.id} - Title:'
+        return f'ID: {self.book} - Status: {self.status}'
 
 
 class Language(models.Model):
@@ -104,3 +104,10 @@ class Publisher(models.Model):
 
     def __str__(self):
         return self.name
+
+class Quote(models.Model):
+    quote = models.TextField(max_length=1000, help_text='Enter your favourite quote')
+    author = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.quote

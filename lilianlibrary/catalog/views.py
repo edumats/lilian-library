@@ -1,20 +1,12 @@
 import os, requests, json
+from random import sample
 from django.shortcuts import render
 from django.views import generic
-from .models import Book, Author, BookInstance, Genre, Language, Publisher
+from .models import Book, Author, BookInstance, Genre, Language, Publisher, Quote
 from .forms import isbnForm
 
 def index(request):
-
-    # Number of visits to this view, as counted in the session variable.
-    num_visits = request.session.get('num_visits', 0)
-    request.session['num_visits'] = num_visits + 1
-
-    context = {
-        'num_visits': num_visits,
-    }
-
-    return render(request, 'index.html', context=context)
+    return render(request, 'index.html')
 
 def add(request):
     if request.method == 'POST':
@@ -46,7 +38,6 @@ def add(request):
             publisher=publisher,
             language=language,
             google_id=book_data['google_id'],
-
         )
 
         # Iterate over authors list
@@ -59,16 +50,20 @@ def add(request):
             genre, created = Genre.objects.get_or_create(name=category)
             book.genre.add(genre)
 
+        # Create a BookInstance
+        book_instance = BookInstance.objects.create(book=book)
+
         form = isbnForm()
 
         context = {
             'success': True,
             'form': isbnForm,
-            'message': 'Book was successfuly added'
+            'message': 'Book was successfuly added',
         }
         return render(request, 'add_book.html', context)
 
     else:
+        # For GET requests
         form = isbnForm()
         return render(request, 'add_book.html', {'form': isbnForm})
 
@@ -76,7 +71,10 @@ def add(request):
 def check(request):
     if request.method == 'GET':
         # Get ISBN from GET request
-        isbn = request.GET.get('isbn')
+        isbn_raw = request.GET.get('isbn')
+
+        # Removes spaces and - from the isbn
+        isbn = isbn_raw.translate({ord(i): None for i in ' -'})
 
         # Get Google Books API key from env variable
         key = os.environ.get('GOOGLE_BOOKS_API_KEY')
@@ -92,29 +90,42 @@ def check(request):
 
         # Defining variables for cleaner code
         book_data = data['items'][0]['volumeInfo']
-        isbn_10 = data['items'][0]['volumeInfo']['industryIdentifiers'][0]
-        isbn_13 = data['items'][0]['volumeInfo']['industryIdentifiers'][1]
         isbn_container = data['items'][0]['volumeInfo']['industryIdentifiers']
 
+        # Initialize variables to avoid getting errors if isbns are not found
+        isbn_10 = None
+        isbn_13 = None
 
+        # For each isbn, get values
+        for isbn in isbn_container:
+            if isbn['type'] == 'ISBN_13':
+                isbn_13 = isbn.get('identifier', 'No ISBN 13')
+            elif isbn['type'] == 'ISBN_10':
+                isbn_10 = isbn.get('identifier', 'No ISBN 10')
+
+        # If a thumbnail is available, get it. Otherwise, assign to empty string
+        if 'imageLinks' in book_data:
+            thumbnail_link = data['items'][0]['volumeInfo']['imageLinks'].get('thumbnail', '')
+        else:
+            # Empty string if no thumbnail is available
+            thumbnail_link = ''
 
         context = {
             'success': True,
-            'title': book_data.get('title', 'No title'),
+            'title': book_data.get('title', 'No title available'),
             # Gets a list
-            'authors': book_data.get('authors', 'No authors'),
-            'publisher': book_data.get('publisher', 'No publisher'),
-            'pages': book_data.get('pageCount', 'No page count'),
-            'description': book_data.get('description', 'No description'),
-            'isbn_10': isbn_10.get('identifier', 'No ISBN 10'),
-            'isbn_13': isbn_13.get('identifier', 'No ISBN 13'),
-            # Empty string if no thumbnail is available
-            'thumbnail': book_data.get('imageLinks', '').get('thumbnail', ''),
-            'language': book_data.get('language', 'No language'),
-            'published_date': book_data.get('publishedDate', 'No published date'),
-            'print_type': book_data.get('printType', 'No print type'),
+            'authors': book_data.get('authors', 'No authors available'),
+            'publisher': book_data.get('publisher', 'No publisher available'),
+            'pages': book_data.get('pageCount', ''),
+            'description': book_data.get('description', 'No description available'),
+            'isbn_10': isbn_10,
+            'isbn_13': isbn_13,
+            'thumbnail': thumbnail_link,
+            'language': book_data.get('language', 'No language available'),
+            'published_date': book_data.get('publishedDate', 'No published date available'),
+            'print_type': book_data.get('printType', 'No print type available'),
             # Gets a list
-            'categories': book_data.get('categories', 'No categories'),
+            'categories': book_data.get('categories', ['No categories available']),
             'average_rating': book_data.get('averageRating', 0),
             'ratings_count': book_data.get('ratingsCount', 0),
             'google_id': data['items'][0].get('id', ''),
