@@ -25,12 +25,12 @@
         <div id="contents" class="row">
             <div id="menu" class="col-md-6">
                 <!-- Search Box -->
-                <form action="{% url 'check' %}" method="GET">
+                <form action="{% url 'search' %}" method="GET">
                     <div class="input-group input-group-lg my-3">
-                        <input id="search-box" type="text" placeholder="SLOWSHIMOGO"/>
-                         <button id="search-button" class='btn' type="button" name="button">
-                             <i id="icon" class="fa fa-search icon-large"></i>
-                         </button>
+                        <input id="search-box" type="text" name="search" placeholder="SLOWSHIMOGO"/>
+                        <button id="search-button" class='btn' type="submit">
+                            <i id="icon" class="fa fa-search icon-large"></i>
+                        </button>
                     </div>
                 </form>
 

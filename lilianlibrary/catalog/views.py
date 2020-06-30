@@ -2,12 +2,15 @@ import os, requests, json
 from random import sample
 from django.shortcuts import render
 from django.views import generic
+from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from .models import Book, Author, BookInstance, Genre, Language, Publisher, Quote
 from .forms import isbnForm
 
 def index(request):
     return render(request, 'index.html')
 
+@login_required
 def add(request):
     if request.method == 'POST':
         # Get previously saved book data in sessions
@@ -137,6 +140,15 @@ def check(request):
 
         return render(request, 'confirm_book.html', context=context)
 
+class SearchView(generic.ListView):
+    model = Book
+    template_name = 'search_results.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get('search')
+        return Book.objects.filter(
+            Q(title__icontains=query) | Q(authors__name__icontains=query)
+        )
 
 class BookListView(generic.ListView):
     model = Book
