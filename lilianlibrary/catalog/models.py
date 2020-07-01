@@ -48,7 +48,12 @@ class Book(models.Model):
     def display_genre(self):
         return ', '.join(genre.name for genre in self.genre.all()[:3])
 
+    def display_author(self):
+        return ', '.join(author.name for author in self.authors.all()[:3])
+
     display_genre.short_description = 'Genre'
+
+    display_author.short_description = 'Authors'
 
     class Meta:
         ordering = ['title']

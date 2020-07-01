@@ -12,14 +12,22 @@ class BookInstanceInline(admin.TabularInline):
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
-    list_display = ('title', 'display_genre')
+    list_display = ('title', 'display_author', 'display_genre')
     inlines = [BookInstanceInline]
 
 @admin.register(BookInstance)
 class BookInstanceAdmin(admin.ModelAdmin):
-    list_display = ('book', 'status', 'due_back')
+    list_display = ('book', 'status', 'borrower', 'due_back')
     list_filter = ('status', 'due_back')
 
+    fieldsets = (
+        (None, {
+            'fields': ('book', 'id')
+        }),
+        ('Availability', {
+            'fields': ('status', 'due_back','borrower')
+        }),
+    )
 
 admin.site.register(Genre)
 admin.site.register(Language)
