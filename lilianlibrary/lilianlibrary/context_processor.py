@@ -9,7 +9,7 @@ def quote_generator(request):
     if total_quotes == 0:
         return {'random_quote': ''}
     # Gets a random number that does not exceed the number of avialable
-    random_id = sample(range(1, total_quotes), 1)
+    random_id = sample(range(1, total_quotes + 1), 1)
     # Filter a quote by a randomized id number
     random_quote = Quote.objects.filter(id__in=random_id)
     # This variable is available in all views
