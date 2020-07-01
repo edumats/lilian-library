@@ -1,0 +1,105 @@
+body {
+    font-family: adobe-garamond-pro, serif;
+}
+
+#menu {
+    height: 100vh;
+}
+
+#content {
+    height: 100vh;
+    overflow: hidden;
+    background-color: Gainsboro;
+}
+
+#right-image {
+    width: 100%;
+    object-fit: cover;
+}
+
+/* Search Bar */
+#search-box {
+    border: none;
+    border-bottom-style: solid;
+    border-width: 1px;
+    width: 40%
+}
+
+/* Search Button */
+#search-button {
+    border: none;
+    background-color: inherit;
+}
+
+#icon {
+    font-size: 2em;
+}
+
+#main-title {
+    text-decoration: none;
+    font-size: 4em;
+}
+
+.quotation {
+    font-weight: bold;
+    font-size: 2em;
+}
+
+/* Menu buttons */
+.btn {
+    border: none;
+    border-bottom-style: solid;
+    border-width: 1px;
+    border-radius: 0;
+}
+
+.menu-buttons {
+    width: 40vw;
+}
+
+.menu-buttons > p {
+    font-size: 1.2em;
+}
+
+/* Right Side Content */
+.container-scroll {
+    overflow: scroll;
+}
+
+/* Book Details */
+#book-image {
+    height: 50vh;
+}
+
+.book-thumb-small {
+    height: 10vw;
+}
+
+/* .sidebar-nav {
+    margin-top: 20px;
+    padding: 0;
+    list-style: none;
+} */
+
+
+/*
+Adobe Garamond Pro Bold
+
+font-family: adobe-garamond-pro, serif;
+
+font-weight: 700;
+
+font-style: normal;
+
+
+Adobe Garamond Pro Regular
+
+font-family: adobe-garamond-pro, serif;
+
+font-weight: 400;
+
+font-style: normal;
+
+
+
+*/
