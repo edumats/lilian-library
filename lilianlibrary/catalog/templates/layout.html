@@ -39,8 +39,16 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="{% url 'books' %}">Titles <span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link active" href="{% url 'authors' %}">Authors</a>
+            <a class="nav-item nav-link active" type="button" href="{% url 'books' %}">
+                <div class="btn btn-outline-dark menu-buttons">
+                    <p class="text-right font-weight-bold mb-0">titles</p>
+                </div>
+            </a>
+            <a class="nav-item nav-link active" href="{% url 'authors' %}">
+                <div class="btn btn-outline-dark menu-buttons">
+                    <p class="text-right font-weight-bold mb-0">authors</p>
+                </div>
+            </a>
           </div>
         </div>
       </nav>
@@ -50,7 +58,7 @@
             <form action="{% url 'search' %}" method="GET">
                 <div class="input-group input-group-lg my-3 justify-content-center">
                     <input id="search-box-menu" class="search-box" type="text" name="search"/>
-                    <button id="search-button-menu" class='btn' type="submit">
+                    <button id="search-button" class='btn' type="submit">
                         <i id="icon" class="fa fa-search icon-large"></i>
                     </button>
                 </div>

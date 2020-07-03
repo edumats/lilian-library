@@ -39,6 +39,11 @@ body {
     background-color: inherit;
 }
 
+#search-button-menu {
+    border: none;
+    background-color: inherit;
+}
+
 #icon {
     font-size: 2em;
 }
