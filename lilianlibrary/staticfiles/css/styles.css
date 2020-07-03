@@ -2,6 +2,10 @@ body {
     font-family: adobe-garamond-pro, serif;
 }
 
+#lib {
+    font-size: 2.5em;
+}
+
 #menu {
     height: 100vh;
 }
@@ -18,11 +22,15 @@ body {
 }
 
 /* Search Bar */
-#search-box {
+.search-box {
     border: none;
     border-bottom-style: solid;
     border-width: 1px;
     width: 40%
+}
+
+#search-box-menu {
+    width: 80%;
 }
 
 /* Search Button */
