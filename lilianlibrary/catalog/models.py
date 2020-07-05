@@ -35,6 +35,7 @@ class Book(models.Model):
     average_rating = models.FloatField(blank=True, null=True)
     ratings_count = models.IntegerField(blank=True, null=True)
     thumbnail = models.URLField(blank=True)
+    tags = models.ManyToManyField('Tag', related_name='tags', blank=True)
 
     def info_link(self):
         return f"https://books.google.com.br/books?id={google_id}=isbn:{isbn}"
@@ -71,7 +72,7 @@ class BookInstance(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Library Unique ID')
     book = models.ForeignKey('Book', on_delete=models.SET_NULL, null=True)
     due_back = models.DateField(null=True, blank=True)
-    location = models.CharField(max_length=50)
+    location = models.CharField(max_length=50, blank=True)
     borrower = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
     MEDIA_CHOICES = [
@@ -124,3 +125,9 @@ class Quote(models.Model):
 
     def __str__(self):
         return self.quote
+
+class Tag(models.Model):
+    name = models.TextField(max_length=100, help_text='Enter your tag')
+
+    def __str__(self):
+        return self.name

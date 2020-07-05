@@ -27,11 +27,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
+    <!-- Mobile Navigation Bar -->
     <div class="pos-f-t d-md-none">
-      <nav class="navbar navbar-light bg-white">
-        <a class="navbar-toggler navbar-brand border-0" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span id="lib" class="text-dark font-weight-bold mr-1">LIB</span><span class="text-dark">SLOWSHIMOGO</span>
-        </a>
+        <nav class="navbar navbar-light bg-white">
+            <a class="navbar-toggler border-0 d-inline" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span id="lib" class="text-dark font-weight-bold">LIB</span>
+                <span class="text-dark ">SLOWSHIMOGO</span>
+            </a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -54,7 +56,7 @@
       </nav>
       <div class="collapse" id="navbarToggleExternalContent">
         <div class="bg-white p-4">
-            <!-- Search Box -->
+            <!-- Search Box for Mobile -->
             <form action="{% url 'search' %}" method="GET">
                 <div class="input-group input-group-lg my-3 justify-content-center">
                     <input id="search-box-menu" class="search-box" type="text" name="search"/>
@@ -66,7 +68,7 @@
 
             <!-- Quotes -->
             <div>
-                <p class="text-center quotation mb-0">"</p>
+                <p class="text-center quotation mb-0">“</p>
                 <div id ="quote" class="text-center mx-4">
                     <p id="quote" class="font-italic text-center mb-0">
                         {% for quote in random_quote %}
@@ -75,16 +77,19 @@
                     <p id="author" class="font-italic text-right mb-0">{{ quote.author}}</p>
                         {% endfor %}
                 </div>
-                <p class="text-center quotation mb-0">"</p>
+                <p class="text-center quotation mb-0">”</p>
 
             </div>
         </div>
       </div>
     </div>
+
+    <!-- Contents -->
     <div class="container-fluid">
         <div id="contents" class="row">
-            <nav id="menu" class="col-md-6 d-none d-sm-none d-md-block">
-                <!-- Search Box -->
+            <nav id="menu" class="col-md-6 d-none d-sm-none d-md-block pl-5">
+
+                <!-- Search Box for Larger Viewports -->
                 <form action="{% url 'search' %}" method="GET">
                     <div class="input-group input-group-lg my-3">
                         <input class="search-box" type="text" name="search" placeholder="SLOWSHIMOGO"/>
@@ -94,12 +99,15 @@
                     </div>
                 </form>
 
+                <!-- Title -->
                 <a href="{% url 'index' %}" class="text-body navbar-brand">
-                    <h1 id="main-title">LIBRARY</h1>
+                    <h1 id="main-title" class="font-weight-bold">LIBRARY</h1>
                 </a>
+
+                <!-- Quotes -->
                 <div>
-                    <p class="text-center quotation mb-0">"</p>
-                    <div id ="quote" class="text-center mx-4">
+                    <p class="text-center quotation mb-0">“</p>
+                    <div class="text-center mx-4 w-75">
                         <p id="quote" class="font-italic text-center mb-0">
                             {% for quote in random_quote %}
                                 {{ quote.quote }}
@@ -107,9 +115,10 @@
                         <p id="author" class="font-italic text-right mb-0">{{ quote.author}}</p>
                             {% endfor %}
                     </div>
-                    <p class="text-center quotation mb-0">"</p>
-
+                    <p class="text-center quotation mb-0">”</p>
                 </div>
+
+                <!-- Sort By Menu -->
                 <h5 class="mb-0">sort by:</h5>
                 <div class="d-flex flex-column">
                     <a class="mb-3" href="{% url 'books' %}">
@@ -134,6 +143,7 @@
                         </div>
                     </a> -->
                 </div>
+
             </nav>
             <div id="content" class="col-md-6 px-0">
                 {% block content %}{% endblock %}

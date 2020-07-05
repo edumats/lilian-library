@@ -1,3 +1,29 @@
+@font-face {
+  font-family: 'Futura Bold';
+  src: local('Futura Bold font'),
+       url('../fonts/Futura-Bold-font.ttf') format("truetype");
+}
+
+.search-box::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  font-family: 'Futura Bold', sans-serif;
+  opacity: 1; /* Firefox */
+  letter-spacing: 2px;
+  color: LightGray;
+  font-weight: bold;
+}
+
+.search-box:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  font-family: 'Futura Bold', sans-serif;
+  letter-spacing: 2px;
+  color: LightGray;
+}
+
+.search-box::-ms-input-placeholder { /* Microsoft Edge */
+  font-family: 'Futura Bold', sans-serif;
+  letter-spacing: 2px;
+  color: LightGray;
+}
+
 body {
     font-family: adobe-garamond-pro, serif;
 }
@@ -81,6 +107,16 @@ body {
 
 .book-thumb-small {
     height: 10vw;
+}
+
+/* For results listing on right pannel */
+
+li a {
+    color: black;
+}
+
+li a:hover {
+    color: DarkGray;
 }
 
 /* .sidebar-nav {
