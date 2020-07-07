@@ -10,4 +10,5 @@ urlpatterns = [
     path('check/', views.check, name='check'),
     path('search/', views.SearchView.as_view(), name='search'),
     path('add/', views.add, name='add'),
+    path('tag/<int:pk>', views.TagDetailsView.as_view(), name='tag-detail'),
 ]

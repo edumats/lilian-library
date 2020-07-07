@@ -1,27 +1,5 @@
-@font-face {
-  font-family: 'Futura Bold';
-  src: local('Futura Bold font'),
-       url('../fonts/Futura-Bold-font.ttf') format("truetype");
-}
-
-.search-box::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-  font-family: 'Futura Bold', sans-serif;
-  opacity: 1; /* Firefox */
-  letter-spacing: 2px;
-  color: LightGray;
-  font-weight: bold;
-}
-
-.search-box:-ms-input-placeholder { /* Internet Explorer 10-11 */
-  font-family: 'Futura Bold', sans-serif;
-  letter-spacing: 2px;
-  color: LightGray;
-}
-
-.search-box::-ms-input-placeholder { /* Microsoft Edge */
-  font-family: 'Futura Bold', sans-serif;
-  letter-spacing: 2px;
-  color: LightGray;
+#nav-mobile {
+    height: 17vh;
 }
 
 body {
@@ -33,14 +11,35 @@ body {
 }
 
 #menu {
-    height: 100vh;
+    max-height: 100vh;
 }
 
 #content {
-    height: 100vh;
-    overflow: hidden;
-    background-color: Gainsboro;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: white;
 }
+
+.img-container {
+    max-height: 100vh;
+    overflow: hidden;
+    /* Content minus the navbar height */
+    height: calc(100vh - 17vh);
+}
+
+/* When using two side by side pannels on large screens */
+@media (min-width: 992px) {
+    #content {
+        background-color: Gainsboro;
+        min-height: 100vh;
+    }
+
+    .img-container {
+        height: 100vh;
+    }
+}
+
+
 
 #right-image {
     width: 100%;
@@ -71,7 +70,7 @@ body {
 
 #main-title {
     text-decoration: none;
-    font-size: 4em;
+    font-size: 12vmin;
 }
 
 .quotation {
@@ -80,7 +79,7 @@ body {
 }
 
 /* Menu buttons */
-.btn {
+a .btn {
     border: none;
     border-bottom-style: solid;
     border-width: 1px;
@@ -88,16 +87,17 @@ body {
 }
 
 .menu-buttons {
-    width: 40vw;
+    width: 80vw;
+}
+
+@media (min-width: 768px) {
+    .menu-buttons {
+        width: 40vw;
+    }
 }
 
 .menu-buttons > p {
     font-size: 1.2em;
-}
-
-/* Right Side Content */
-.container-scroll {
-    overflow: scroll;
 }
 
 /* Book Details */
@@ -111,12 +111,64 @@ body {
 
 /* For results listing on right pannel */
 
-li a {
+a {
     color: black;
 }
 
-li a:hover {
+a:hover {
     color: DarkGray;
+}
+
+/* For book list page */
+
+.tag-link {
+    font-size: 1.3em;
+}
+
+.library-list-item {
+    font-size: 1.2em;
+}
+
+#add-link {
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+@font-face {
+  font-family: 'Futura Bold';
+  src: local('Futura Bold font'),
+       url('../fonts/Futura-Bold-font.ttf') format("truetype");
+}
+
+.search-box::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  font-family: 'Futura Bold', sans-serif;
+  opacity: 1; /* Firefox */
+  letter-spacing: 2px;
+  color: LightGray;
+  font-weight: bold;
+}
+
+.search-box:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  font-family: 'Futura Bold', sans-serif;
+  letter-spacing: 2px;
+  color: LightGray;
+}
+
+.search-box::-ms-input-placeholder { /* Microsoft Edge */
+  font-family: 'Futura Bold', sans-serif;
+  letter-spacing: 2px;
+  color: LightGray;
+}
+
+.search-box {
+    outline-color: black;
+}
+
+/* Text that goes inside input */
+input[type='text'] {
+    font-family: 'Futura Bold', sans-serif;
+    letter-spacing: 2px;
+    color: LightGray;
 }
 
 /* .sidebar-nav {

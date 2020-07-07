@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.views import generic
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from .models import Book, Author, BookInstance, Genre, Language, Publisher, Quote
+from .models import Book, Author, BookInstance, Genre, Language, Publisher, Quote, Tag
 from .forms import isbnForm
 
 def index(request):
@@ -17,9 +17,11 @@ def add(request):
         book_data = request.session['scanned_book']
         # Get ISBN 10
         isbn_10 = book_data['isbn_10']
+        # Get ISBN 13
+        isbn_13 = book_data['isbn_13']
 
         # Check if book already exists in database
-        if Book.objects.filter(isbn_10=isbn_10).exists():
+        if Book.objects.filter(isbn_10=isbn_10).exists() or Book.objects.filter(isbn_13=isbn_13).exists():
             return render(request, 'confirm_book.html', {'success': False, 'message': 'This book already exists in the library'})
 
         # Finds or creates Publisher instance
@@ -161,3 +163,14 @@ class AuthorListView(generic.ListView):
 
 class AuthorDetailsView(generic.DetailView):
     model = Author
+
+class TagDetailsView(generic.DetailView):
+    model = Tag
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        tag = Tag.objects.get(id=self.kwargs['pk'])
+        context['book_list'] = Book.objects.filter(tags=tag)
+        return context

@@ -2,25 +2,34 @@
 {% block title %}<title>Book Details - Lilian's Library</title>{% endblock %}
 
 {% block content %}
-    <div class="container h-100 container-scroll">
+    <div class="container">
         <img id="book-image" class="img-fluid float-right mt-3 mr-4 ml-3 mb-2" src="{{ book.thumbnail }}" />
         <div class="mt-4 ml-2">
-            <h1>{{ book.title }}</h1>
+            <h2 class="font-weight-bold">{{ book.title }}</h2>
 
-            <p><strong>Author:</strong>
+            <p>
                 {% for author in book.authors.all %}
                     <a href="{% url 'author-detail' author.pk %}">{{ author.name }}</a>
                 {% endfor %}
             </p>
-                <!-- author detail link not yet defined -->
-            <p><strong>Rating:</strong> {{ book.average_rating }} in {{ book.ratings_count }} ratings</p>
-            <p><strong>Summary:</strong> {{ book.description }}</p>
-            <p><strong>Publisher:</strong> {{ book.publisher }}</p>
+            <p><strong>Ed:</strong> {{ book.publisher }}</p>
             <p><strong>ISBN 13:</strong> {{ book.isbn_13 }}</p>
-            <p><strong>Pages:</strong> {{ book.number_pages }} pages</p>
             <p><strong>Language:</strong> {{ book.language }}</p>
+            <p><strong>Rating:</strong> {{ book.average_rating }} in {{ book.ratings_count }} ratings</p>
+            <p><strong>Pages:</strong> {{ book.number_pages }} pages</p>
             <p><strong>Genre:</strong> {{ book.genre.all|join:", " }}</p>
+            <p>{{ book.description }}</p>
+
             <small>Added to Library in: {{ book.date_added_to_library }}</small>
+
+            <hr>
+
+            <h5>more...</h5>
+            <li class="list-unstyled my-3">
+                {% for tag in book.tags.all %}
+                    <a class="font-weight-bold d-block mt-1 tag-link" href="{{ tag.get_absolute_url }}">+ {{ tag }}</a>
+                {% endfor %}
+            </li>
 
             <div style="margin-left:20px;margin-top:20px">
                 <h4>Copies</h4>
@@ -34,8 +43,6 @@
                         {% if copy.status != 'a' %}
                             <p><strong>Due to be returned:</strong> {{ copy.due_back }}</p>
                             {% endif %}
-                            <p><strong>Imprint:</strong> {{ copy.imprint }}</p>
-                            <p class="text-muted"><strong>Id:</strong> {{ copy.id }}</p>
                     {% endfor %}
                 {% else %}
                     <hr>

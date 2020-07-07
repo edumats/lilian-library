@@ -25,69 +25,77 @@
 
     <!-- Font Awesome Icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- JS File -->
+    <script type="text/javascript" src="{% static 'catalog/scripts.js' %}"></script>
 </head>
 <body>
     <!-- Mobile Navigation Bar -->
-    <div class="pos-f-t d-md-none">
-        <nav class="navbar navbar-light bg-white">
-            <a class="navbar-toggler border-0 d-inline" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+    <div class="pos-f-t d-lg-none">
+        <nav id="nav-mobile" class="navbar navbar-light bg-white">
+            <a id="search-button" class="navbar-toggler border-0 d-inline" role="button" data-toggle="collapse" data-target="#navbarToggleSearch" aria-controls="navbarToggleSearch" aria-expanded="false" aria-label="Toggle navigation">
                 <span id="lib" class="text-dark font-weight-bold">LIB</span>
                 <span class="text-dark ">SLOWSHIMOGO</span>
             </a>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <div class="navbar-nav">
-            <a class="nav-item nav-link active" type="button" href="{% url 'books' %}">
-                <div class="btn btn-outline-dark menu-buttons">
-                    <p class="text-right font-weight-bold mb-0">titles</p>
-                </div>
-            </a>
-            <a class="nav-item nav-link active" href="{% url 'authors' %}">
-                <div class="btn btn-outline-dark menu-buttons">
-                    <p class="text-right font-weight-bold mb-0">authors</p>
-                </div>
-            </a>
-          </div>
-        </div>
-      </nav>
-      <div class="collapse" id="navbarToggleExternalContent">
-        <div class="bg-white p-4">
-            <!-- Search Box for Mobile -->
-            <form action="{% url 'search' %}" method="GET">
-                <div class="input-group input-group-lg my-3 justify-content-center">
-                    <input id="search-box-menu" class="search-box" type="text" name="search"/>
-                    <button id="search-button" class='btn' type="submit">
-                        <i id="icon" class="fa fa-search icon-large"></i>
-                    </button>
-                </div>
-            </form>
-
-            <!-- Quotes -->
-            <div>
-                <p class="text-center quotation mb-0">“</p>
-                <div id ="quote" class="text-center mx-4">
-                    <p id="quote" class="font-italic text-center mb-0">
-                        {% for quote in random_quote %}
-                            {{ quote.quote }}
-                    </p>
-                    <p id="author" class="font-italic text-right mb-0">{{ quote.author}}</p>
-                        {% endfor %}
-                </div>
-                <p class="text-center quotation mb-0">”</p>
-
+            <button id="nav-button" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarDisplayMenu" aria-controls="navbarDisplayMenu" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+        </nav>
+        <!-- Dropdown menu buttons -->
+        <div class="collapse" id="navbarDisplayMenu">
+            <div class="navbar-nav text-center">
+                <a class="nav-item nav-link active" type="button" href="{% url 'index' %}">
+                    <div class="btn btn-outline-dark menu-buttons">
+                        <p class="text-right font-weight-bold mb-0">home</p>
+                    </div>
+                </a>
+                <a class="nav-item nav-link active" type="button" href="{% url 'books' %}">
+                    <div class="btn btn-outline-dark menu-buttons">
+                        <p class="text-right font-weight-bold mb-0">titles</p>
+                    </div>
+                </a>
+                <a class="nav-item nav-link active mb-4" href="{% url 'authors' %}">
+                    <div class="btn btn-outline-dark menu-buttons">
+                        <p class="text-right font-weight-bold mb-0">authors</p>
+                    </div>
+                </a>
             </div>
         </div>
-      </div>
+        <div class="collapse" id="navbarToggleSearch">
+            <div class="bg-white p-4">
+                <!-- Search Box for Mobile -->
+                <form action="{% url 'search' %}" method="GET">
+                    <div class="input-group input-group-lg my-3 justify-content-center">
+                        <input id="search-box-menu" class="search-box" type="text" name="search"/>
+                        <button id="search-button" class='btn' type="submit">
+                            <i id="icon" class="fa fa-search icon-large"></i>
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Quotes -->
+                <div>
+                    <p class="text-center quotation mb-0">“</p>
+                    <div id ="quote" class="text-center mx-4">
+                        <p id="quote" class="font-italic text-center mb-0">
+                            {% for quote in random_quote %}
+                                {{ quote.quote }}
+                        </p>
+                        <p id="author" class="font-italic text-right mb-0">{{ quote.author}}</p>
+                            {% endfor %}
+                    </div>
+                    <p class="text-center quotation mb-0">”</p>
+
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Contents -->
-    <div class="container-fluid">
-        <div id="contents" class="row">
-            <nav id="menu" class="col-md-6 d-none d-sm-none d-md-block pl-5">
+    <!-- Contents for medium or larger viewports -->
+    <div id="contents-container" class="container-fluid">
+        <div class="row">
+            <div id="menu" class="col-md-6 pl-5 d-none d-lg-flex flex-column justify-content-around sticky-top">
 
                 <!-- Search Box for Larger Viewports -->
                 <form action="{% url 'search' %}" method="GET">
@@ -144,8 +152,8 @@
                     </a> -->
                 </div>
 
-            </nav>
-            <div id="content" class="col-md-6 px-0">
+            </div>
+            <div id="content" class="col-lg-6 px-0">
                 {% block content %}{% endblock %}
             </div>
         </div>

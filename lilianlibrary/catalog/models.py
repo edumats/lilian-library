@@ -21,10 +21,10 @@ class Book(models.Model):
     # Only title is required
     title = models.CharField(max_length=250)
     authors = models.ManyToManyField('Author', related_name='books', blank=True)
-    # When data is inserted, it must be unique.
+    # If data is inserted, it must be unique.
     # It can also be left as blank without unique contraint violation
     isbn_10 = models.CharField('ISBN 10', max_length=10, help_text='ISBN 10', unique=True, blank=True, null=True)
-    isbn_13 = models.CharField('ISBN 13', max_length=13, help_text='ISBN 13', blank=True)
+    isbn_13 = models.CharField('ISBN 13', max_length=13, help_text='ISBN 13', unique=True, blank=True, null=True)
     genre = models.ManyToManyField('Genre', help_text='Genre(s) of the book', blank=True, related_name='books')
     description = models.TextField(max_length=1000, blank=True)
     language = models.ForeignKey('Language', on_delete=models.SET_NULL, null=True, blank=True)
@@ -131,3 +131,6 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('tag-detail', args=[str(self.id)])
