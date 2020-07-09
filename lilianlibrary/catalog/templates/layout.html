@@ -96,21 +96,24 @@
     <div id="contents-container" class="container-fluid">
         <div class="row">
             <div id="menu" class="col-md-6 pl-5 d-none d-lg-flex flex-column justify-content-around sticky-top">
+                <div>
+                    <!-- Search Box for Larger Viewports -->
+                    <form action="{% url 'search' %}" method="GET">
+                        <div class="input-group input-group-lg mt-3">
+                            <input class="search-box" type="text" name="search" placeholder="SLOWSHIMOGO"/>
+                            <button id="search-button" class='btn p-0' type="submit">
+                                <img id="bike-icon" src="{% static 'catalog/bike-icon.png' %}" alt="bike icon" height="30">
+                                <!-- <i id="icon" class="fa fa-search icon-large"></i> -->
+                            </button>
+                        </div>
+                    </form>
 
-                <!-- Search Box for Larger Viewports -->
-                <form action="{% url 'search' %}" method="GET">
-                    <div class="input-group input-group-lg my-3">
-                        <input class="search-box" type="text" name="search" placeholder="SLOWSHIMOGO"/>
-                        <button id="search-button" class='btn' type="submit">
-                            <i id="icon" class="fa fa-search icon-large"></i>
-                        </button>
-                    </div>
-                </form>
+                    <!-- Title -->
+                    <a href="{% url 'index' %}" class="text-body navbar-brand">
+                        <h1 id="main-title" class="font-weight-bold">LIBRARY</h1>
+                    </a>
+                </div>
 
-                <!-- Title -->
-                <a href="{% url 'index' %}" class="text-body navbar-brand">
-                    <h1 id="main-title" class="font-weight-bold">LIBRARY</h1>
-                </a>
 
                 <!-- Quotes -->
                 <div>
@@ -127,9 +130,10 @@
                 </div>
 
                 <!-- Sort By Menu -->
-                <h5 class="mb-0">sort by:</h5>
+
                 <div class="d-flex flex-column">
-                    <a class="mb-3" href="{% url 'books' %}">
+                    <h5 class="mb-0">sort by:</h5>
+                    <a href="{% url 'books' %}">
                         <div class="btn btn-outline-dark menu-buttons">
                             <p class="text-right font-weight-bold mb-0">
                                 title
@@ -155,34 +159,15 @@
             </div>
             <div id="content" class="col-lg-6 px-0">
                 {% block content %}{% endblock %}
-            </div>
-        </div>
-    </div>
-
-    <!-- <div class="container-fluid">
-        <div class="row">
-            <!-- <div class="col-sm-2 bg-alert">
-                {% block sidebar %}
-                <ul class="sidebar-nav ">
-                    <li><a href="{% url 'index' %}">Home</a></li>
-                    <li><a href="{% url 'books' %}">All books</a></li>
-                    <li><a href="{% url 'authors' %}">All authors</a></li>
-                </ul>
-                {% endblock %}
-            </div> -->
-            <!-- <div class="col-sm-10 ">
-
-
-                <!-- If page has pagination, use layout below
                 {% block pagination %}
                     {% if is_paginated %}
-                        <div class="pagination">
+                        <div class="pagination mb-3 ml-4">
                             <span class="page-links">
                                 {% if page_obj.has_previous %}
                                     <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
                                 {% endif %}
                                 <span class="page-current">
-                                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                                    page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
                                 </span>
                                 {% if page_obj.has_next %}
                                     <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
@@ -191,9 +176,7 @@
                         </div>
                     {% endif %}
                 {% endblock %}
-                -->
             </div>
-
         </div>
     </div>
 </body>

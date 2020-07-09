@@ -154,18 +154,22 @@ class SearchView(generic.ListView):
 
 class BookListView(generic.ListView):
     model = Book
+    paginate_by = 10
 
 class BookDetailsView(generic.DetailView):
     model = Book
 
 class AuthorListView(generic.ListView):
     model = Author
+    paginate_by = 10
 
 class AuthorDetailsView(generic.DetailView):
     model = Author
+    paginate_by = 10
 
 class TagDetailsView(generic.DetailView):
     model = Tag
+    paginate_by = 10
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
@@ -173,4 +177,28 @@ class TagDetailsView(generic.DetailView):
         # Add in a QuerySet of all the books
         tag = Tag.objects.get(id=self.kwargs['pk'])
         context['book_list'] = Book.objects.filter(tags=tag)
+        return context
+
+class GenreDetailsView(generic.DetailView):
+    model = Genre
+    paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        genre = Genre.objects.get(id=self.kwargs['pk'])
+        context['book_list'] = Book.objects.filter(genre=genre)
+        return context
+
+class PublisherDetailsView(generic.DetailView):
+    model = Publisher
+    paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        genre = Publisher.objects.get(id=self.kwargs['pk'])
+        context['book_list'] = Book.objects.filter(publisher=publisher)
         return context

@@ -66,6 +66,8 @@ class Genre(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('genre-detail', args=[str(self.id)])
 
 
 class BookInstance(models.Model):
@@ -118,6 +120,9 @@ class Publisher(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('publisher-detail', args=[str(self.id)])
 
 class Quote(models.Model):
     quote = models.TextField(max_length=1000, help_text='Enter your favourite quote')

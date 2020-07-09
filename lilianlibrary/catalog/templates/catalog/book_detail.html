@@ -17,18 +17,30 @@
             <p><strong>Language:</strong> {{ book.language }}</p>
             <p><strong>Rating:</strong> {{ book.average_rating }} in {{ book.ratings_count }} ratings</p>
             <p><strong>Pages:</strong> {{ book.number_pages }} pages</p>
-            <p><strong>Genre:</strong> {{ book.genre.all|join:", " }}</p>
+            <p>
+                <strong>Genre:</strong>
+                <!-- {{ book.genre.all|join:", " }} -->
+                {% for genre in book.genre.all %}
+                <a href="{% url 'genre-detail' genre.pk %}">{{ genre.name }}</a>
+                {% endfor %}
+            </p>
             <p>{{ book.description }}</p>
 
             <small>Added to Library in: {{ book.date_added_to_library }}</small>
 
             <hr>
 
-            <h5>more...</h5>
+
             <li class="list-unstyled my-3">
-                {% for tag in book.tags.all %}
-                    <a class="font-weight-bold d-block mt-1 tag-link" href="{{ tag.get_absolute_url }}">+ {{ tag }}</a>
-                {% endfor %}
+                {% if book.tags.all.exists %}
+                    <h5>more...</h5>
+                    {% for tag in book.tags.all %}
+                        <a class="font-weight-bold d-block mt-1 tag-link" href="{{ tag.get_absolute_url }}">+ {{ tag }}</a>
+                    {% endfor %}
+                {% else %}
+                    <h5>no tags</h5>
+                {% endif %}
+
             </li>
 
             <div style="margin-left:20px;margin-top:20px">

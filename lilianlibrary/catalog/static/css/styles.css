@@ -1,5 +1,5 @@
 #nav-mobile {
-    height: 17vh;
+    height: 15vh;
 }
 
 body {
@@ -24,7 +24,13 @@ body {
     max-height: 100vh;
     overflow: hidden;
     /* Content minus the navbar height */
-    height: calc(100vh - 17vh);
+    height: calc(100vh - 15vh);
+}
+
+#add-link {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: DarkGray;
 }
 
 /* When using two side by side pannels on large screens */
@@ -36,6 +42,10 @@ body {
 
     .img-container {
         height: 100vh;
+    }
+
+    #add-link {
+        color: white;
     }
 }
 
@@ -63,6 +73,10 @@ body {
     border: none;
     background-color: inherit;
 }
+
+/* #bike-icon {
+    max-height: 5px;
+} */
 
 #icon {
     font-size: 2em;
@@ -106,7 +120,19 @@ a .btn {
 }
 
 .book-thumb-small {
-    height: 10vw;
+    height: 40vw;
+}
+
+@media (min-width: 768px) {
+    .book-thumb-small {
+        height: 23vw;
+    }
+}
+
+@media (min-width: 768px) {
+    .menu-buttons {
+        width: 40vw;
+    }
 }
 
 /* For results listing on right pannel */
@@ -127,11 +153,6 @@ a:hover {
 
 .library-list-item {
     font-size: 1.2em;
-}
-
-#add-link {
-    font-size: 1.8em;
-    font-weight: bold;
 }
 
 @font-face {
@@ -168,7 +189,7 @@ a:hover {
 input[type='text'] {
     font-family: 'Futura Bold', sans-serif;
     letter-spacing: 2px;
-    color: LightGray;
+    color: black;
 }
 
 /* .sidebar-nav {

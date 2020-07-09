@@ -2,23 +2,28 @@
 {% block title %}<title>Author Details - Lilian's Library</title>{% endblock %}
 
 {% block content %}
-    <div class="container mt-2 ml-2">
-        <h1>{{ author.name }}</h1>
-
-        <div style="margin-left:20px;margin-top:20px">
+    <div class="mt-2 ml-4">
+        <h1 class="font-weight-bold">{{ author.name }}</h1>
+        <div class="mr-2">
             <h4>Available books</h4>
 
             {% for book in author.books.all %}
                 <hr>
-                <img class="img-fluid book-thumb-small float-right" src="{{ book.thumbnail }}" />
-                <p>
-                    <strong>Title:</strong>
-                    <a href="{{ book.get_absolute_url }}">{{ book.title }}</a>
-                </p>
-
-                <p><strong>Genre:</strong> {{ book.display_genre }}</p>
-                <p class="text-muted"><strong>Language</strong> {{ book.language }}</p>
+                <div class="row">
+                    <div class="col-8">
+                        <p>
+                            <p>Title: <a class="font-weight-bold" href="{{ book.get_absolute_url }}">{{ book.title }}</a></p>
+                        </p>
+                        <p>Genre: <strong>{{ book.display_genre }}</strong></p>
+                        <p>Pages: <strong>{{ book.number_pages }}</strong></p>
+                        <p>Language: <strong>{{ book.language }}</strong></p>
+                    </div>
+                    <div class="col-4 text-center">
+                        <img class="img-fluid book-thumb-small " src="{{ book.thumbnail }}" />
+                    </div>
+                </div>
             {% endfor %}
         </div>
+
     </div>
 {% endblock %}

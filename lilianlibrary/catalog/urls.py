@@ -11,4 +11,6 @@ urlpatterns = [
     path('search/', views.SearchView.as_view(), name='search'),
     path('add/', views.add, name='add'),
     path('tag/<int:pk>', views.TagDetailsView.as_view(), name='tag-detail'),
+    path('genre/<int:pk>', views.GenreDetailsView.as_view(), name='genre-detail'),
+    path('publisher/<int:pk>', views.PublisherDetailsView.as_view(), name='publisher-detail'),
 ]
