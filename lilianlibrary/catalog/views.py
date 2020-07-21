@@ -5,7 +5,7 @@ from django.views import generic
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from .models import Book, Author, BookInstance, Genre, Language, Publisher, Quote, Tag
-from .forms import isbnForm
+from .forms import isbnForm, bookNoteForm, tagForm
 
 def index(request):
     return render(request, 'index.html')
@@ -159,6 +159,14 @@ class BookListView(generic.ListView):
 class BookDetailsView(generic.DetailView):
     model = Book
 
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add forms
+        context['note_form'] = bookNoteForm
+        context['tag_form'] = tagForm
+        return context
+
 class AuthorListView(generic.ListView):
     model = Author
     paginate_by = 10
@@ -199,6 +207,6 @@ class PublisherDetailsView(generic.DetailView):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         # Add in a QuerySet of all the books
-        genre = Publisher.objects.get(id=self.kwargs['pk'])
+        publisher = Publisher.objects.get(id=self.kwargs['pk'])
         context['book_list'] = Book.objects.filter(publisher=publisher)
         return context

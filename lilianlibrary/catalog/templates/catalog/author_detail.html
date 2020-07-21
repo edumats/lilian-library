@@ -9,19 +9,20 @@
 
             {% for book in author.books.all %}
                 <hr>
-                <div class="row">
-                    <div class="col-8">
-                        <p>
-                            <p>Title: <a class="font-weight-bold" href="{{ book.get_absolute_url }}">{{ book.title }}</a></p>
-                        </p>
-                        <p>Genre: <strong>{{ book.display_genre }}</strong></p>
-                        <p>Pages: <strong>{{ book.number_pages }}</strong></p>
-                        <p>Language: <strong>{{ book.language }}</strong></p>
+                <a href="{{ book.get_absolute_url }}">
+                    <div class="row">
+                        <div class="col-8">
+                            <p>Title: <span class="font-weight-bold">{{ book.title }}</span></p>
+                            <p>Genre: <strong>{{ book.display_genre }}</strong></p>
+                            <p>Pages: <strong>{{ book.number_pages }}</strong></p>
+                            <p>Language: <strong>{{ book.language }}</strong></p>
+                        </div>
+                        <div class="col-4 text-center">
+                            <img class="img-fluid book-thumb-small " src="{{ book.thumbnail }}" />
+                        </div>
                     </div>
-                    <div class="col-4 text-center">
-                        <img class="img-fluid book-thumb-small " src="{{ book.thumbnail }}" />
-                    </div>
-                </div>
+                </a>
+
             {% endfor %}
         </div>
 

@@ -2,6 +2,8 @@
 {% block title %}<title>Book Details - Lilian's Library</title>{% endblock %}
 
 {% block content %}
+    {% load static %}
+    <script type="text/javascript" src="{% static 'catalog/book-detail.js' %}"></script>
     <div class="container">
         <img id="book-image" class="img-fluid float-right mt-3 mr-4 ml-3 mb-2" src="{{ book.thumbnail }}" />
         <div class="mt-4 ml-2">
@@ -12,16 +14,39 @@
                     <a href="{% url 'author-detail' author.pk %}">{{ author.name }}</a>
                 {% endfor %}
             </p>
-            <p><strong>Ed:</strong> {{ book.publisher }}</p>
+            <p>
+                <strong>Ed:</strong>
+                {% if book.publisher %}
+                    <a href="{% url 'publisher-detail' book.publisher.pk %}">{{ book.publisher }}</a>
+                {% else %}
+                    <span>No publisher</span>
+                {% endif %}
+            </p>
             <p><strong>ISBN 13:</strong> {{ book.isbn_13 }}</p>
             <p><strong>Language:</strong> {{ book.language }}</p>
-            <p><strong>Rating:</strong> {{ book.average_rating }} in {{ book.ratings_count }} ratings</p>
-            <p><strong>Pages:</strong> {{ book.number_pages }} pages</p>
+            <p>
+                <strong>Rating:</strong>
+                {% if book.ratings_count is None or book.ratings_count == 0 %}
+                    No ratings found
+                {% else %}
+                    {{ book.average_rating }} in {{ book.ratings_count }} ratings
+                {% endif %}
+            </p>
+            <p>
+                <strong>Pages:</strong>
+                {% if book.number_pages %}
+                    {{ book.number_pages }} pages
+                {% else %}
+                    Number of pages not found
+                {% endif %}
+            </p>
             <p>
                 <strong>Genre:</strong>
                 <!-- {{ book.genre.all|join:", " }} -->
                 {% for genre in book.genre.all %}
-                <a href="{% url 'genre-detail' genre.pk %}">{{ genre.name }}</a>
+                    <a href="{% url 'genre-detail' genre.pk %}">{{ genre.name }}</a>
+                {% empty %}
+                    No genres found
                 {% endfor %}
             </p>
             <p>{{ book.description }}</p>
@@ -40,10 +65,10 @@
                 {% else %}
                     <h5>no tags</h5>
                 {% endif %}
-
+                <input class="btn btn-outline-dark my-2" type="button" name="add-tag" value="+ add tag" data-toggle="modal" data-target="#tagModal">
             </li>
 
-            <div style="margin-left:20px;margin-top:20px">
+            <div class="mb-3 ml-3">
                 <h4>Copies</h4>
                 {% if book.bookinstance_set.all %}
                     {% for copy in book.bookinstance_set.all %}
@@ -54,7 +79,17 @@
                         </p>
                         {% if copy.status != 'a' %}
                             <p><strong>Due to be returned:</strong> {{ copy.due_back }}</p>
-                            {% endif %}
+                        {% endif %}
+
+                        <p><strong>Notes:</strong></p>
+                        {% if copy.note %}
+                            <p>{{ copy.note }}</p>
+                            <input class="btn btn-outline-dark" type="button" name="edit-note" value="+ edit note">
+
+
+                        {% else %}
+                            <input class="btn btn-outline-dark" type="button" name="add-note" value="+ add note" data-toggle="modal" data-target="#addNoteModal">
+                        {% endif %}
                     {% endfor %}
                 {% else %}
                     <hr>
@@ -65,4 +100,67 @@
         </div>
     </div>
 
+
+    <!-- Add Tag Modal -->
+    <div class="modal fade" id="tagModal" tabindex="-1" role="dialog" aria-labelledby="tagModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">+ add tag</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            {{ tag_form }}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">close</button>
+            <button id="save-tag" type="button" class="btn btn-primary">add tag</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Note Modal -->
+    <div class="modal fade" id="addNoteModal" tabindex="-1" role="dialog" aria-labelledby="addNoteModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">+ add note</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            {{ note_form }}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">close</button>
+            <button type="button" class="btn btn-primary">save note</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edit Note Modal -->
+    <div class="modal fade" id="editNoteModal" tabindex="-1" role="dialog" aria-labelledby="editNoteModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">+ edit note</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <input type="text" name="" value="">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">close</button>
+            <button type="button" class="btn btn-primary">save note</button>
+          </div>
+        </div>
+      </div>
+    </div>
 {% endblock %}

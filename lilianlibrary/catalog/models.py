@@ -76,6 +76,7 @@ class BookInstance(models.Model):
     due_back = models.DateField(null=True, blank=True)
     location = models.CharField(max_length=50, blank=True)
     borrower = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    note = models.TextField(max_length=1000, blank=True)
 
     MEDIA_CHOICES = [
         ('B', 'Book'),

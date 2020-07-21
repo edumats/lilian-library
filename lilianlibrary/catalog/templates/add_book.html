@@ -13,13 +13,37 @@
         </div>
 
     {% else %}
+        {% load crispy_forms_tags %}
+        <style>
+            /* In order to place the tracking correctly */
+            canvas.drawing, canvas.drawingBuffer {
+                position: absolute;
+                left: 0;
+                top: 20;
+            }
+
+            input[type=text] {
+                width: 80%;
+            }
+        </style>
+        {% load static %}
+        <script type="text/javascript" src="{% static 'catalog/scanner.js' %}"></script>
+        <script type="text/javascript" src="{% static 'catalog/quagga.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'catalog/isbn.js'%}"></script>
+        <script type="text/javascript" src="{% static 'catalog/isbn-groups.js' %}"></script>
+
+        </script>
         <div class="container-fluid pt-3">
             <h1>Add a Book</h1>
 
             <form method="GET" action="{% url 'check' %}">
-                {{ form }}
-                <input type="submit" value="Submit">
+                {{ form|crispy }}
+                <input id="cam-btn" class="btn btn-secondary mr-3" type="button" name="" value="Start/Stop Scanner">
+                <input type="submit" class="btn btn-primary" value="Submit">
             </form>
+
+
+            <div class="mt-4" id="scanner-container"></div>
         </div>
     {% endif %}
 
