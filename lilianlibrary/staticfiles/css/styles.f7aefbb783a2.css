@@ -158,7 +158,7 @@ a:hover {
 @font-face {
   font-family: 'Futura Bold';
   src: local('Futura Bold font'),
-       url('../fonts/Futura-Bold-font.ttf') format("truetype");
+       url("../fonts/Futura-Bold-font.4c62644b1595.ttf") format("truetype");
 }
 
 .search-box::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
