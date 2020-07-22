@@ -20,8 +20,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 type: "LiveStream",
                 target: document.querySelector('#scanner-container'),
                 constraints: {
-                    width: 640,
-                    height: 480,
+                    width: 800,
+                    height: 600,
                     facingMode: "environment"
                 },
                 area: { // defines rectangle of the detection/localization area
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     "ean_reader",
                 ],
                 debug: {
-                    showCanvas: true,
+                    showCanvas: false,
                     showPatches: true,
                     showFoundPatches: true,
                     showSkeleton: true,
@@ -107,6 +107,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.log("Barcode detected and processed : [" + code + "]", result);
                     // Parse checked code to input field
                     document.getElementsByName('isbn')[0].value = code;
+
+                    // Submits the form
+                    document.querySelector('#submit-isbn').submit();
                 } else {
                     console.log('Not valid');
                 }
