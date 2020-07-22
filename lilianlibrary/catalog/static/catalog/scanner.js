@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById("cam-btn").addEventListener("click", function () {
         if (_scannerIsRunning) {
             Quagga.stop();
+            _scannerIsRunning = false;
         } else {
             startScanner();
         }
@@ -107,6 +108,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.log("Barcode detected and processed : [" + code + "]", result);
                     // Parse checked code to input field
                     document.getElementsByName('isbn')[0].value = code;
+
+                    // Stops the scanner to prevent additional calls to function
+                    Quagga.stop();
 
                     // Submits the form
                     document.querySelector('#submit-isbn').submit();
