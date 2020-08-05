@@ -21,10 +21,10 @@ body {
 }
 
 .img-container {
-    max-height: 100vh;
+    
     overflow: hidden;
     /* Content minus the navbar height */
-    height: calc(100vh - 15vh);
+
 }
 
 #add-link {

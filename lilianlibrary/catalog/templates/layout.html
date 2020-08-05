@@ -43,19 +43,19 @@
             </button>
         </nav>
         <!-- Dropdown menu buttons -->
-        <div class="collapse" id="navbarDisplayMenu">
+        <div class="collapse navbar-collapse" id="navbarDisplayMenu">
             <div class="navbar-nav text-center">
-                <a class="nav-item active" type="button" href="{% url 'index' %}">
+                <a class="nav-item" type="button" href="{% url 'index' %}">
                     <div class="btn btn-outline-dark menu-buttons">
                         <p class="text-right font-weight-bold mb-0">home</p>
                     </div>
                 </a>
-                <a class="nav-item active" type="button" href="{% url 'books' %}">
+                <a class="nav-item" type="button" href="{% url 'books' %}">
                     <div class="btn btn-outline-dark menu-buttons">
                         <p class="text-right font-weight-bold mb-0">titles</p>
                     </div>
                 </a>
-                <a class="nav-item active mb-4" href="{% url 'authors' %}">
+                <a class="nav-item mb-4" href="{% url 'authors' %}">
                     <div class="btn btn-outline-dark menu-buttons">
                         <p class="text-right font-weight-bold mb-0">authors</p>
                     </div>
@@ -69,7 +69,7 @@
                     <div class="input-group input-group-lg my-3 justify-content-center">
                         <input id="search-box-menu" class="search-box" type="text" name="search"/>
                         <button id="search-button" class='btn' type="submit">
-                            <i id="icon" class="fa fa-search icon-large"></i>
+                            <img id="bike-icon" src="{% static 'catalog/bike-icon.png' %}" alt="bike icon" height="30">
                         </button>
                     </div>
                 </form>
@@ -82,7 +82,7 @@
                             {% for quote in random_quote %}
                                 {{ quote.quote }}
                         </p>
-                        <p id="author" class="font-italic text-right mb-0">{{ quote.author}}</p>
+                        <p id="author" class="text-right mb-0">{{ quote.author}}</p>
                             {% endfor %}
                     </div>
                     <p class="text-center quotation mb-0">”</p>
@@ -103,7 +103,6 @@
                             <input class="search-box" type="text" name="search" placeholder="SLOWSHIMOGO"/>
                             <button id="search-button" class='btn p-0' type="submit">
                                 <img id="bike-icon" src="{% static 'catalog/bike-icon.png' %}" alt="bike icon" height="30">
-                                <!-- <i id="icon" class="fa fa-search icon-large"></i> -->
                             </button>
                         </div>
                     </form>
@@ -123,7 +122,7 @@
                             {% for quote in random_quote %}
                                 {{ quote.quote }}
                         </p>
-                        <p id="author" class="font-italic text-right mb-0">{{ quote.author}}</p>
+                        <p id="author" class="text-right mb-0">{{ quote.author}}</p>
                             {% endfor %}
                     </div>
                     <p class="text-center quotation mb-0">”</p>

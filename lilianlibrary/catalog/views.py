@@ -2,7 +2,7 @@ import os, requests, json
 from random import sample
 from django.shortcuts import render
 from django.views import generic
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Q
 from .models import Book, Author, BookInstance, Genre, Language, Publisher, Quote, Tag
 from .forms import isbnForm, bookNoteForm, tagForm
@@ -11,6 +11,7 @@ def index(request):
     return render(request, 'index.html')
 
 @login_required
+@user_passes_test(lambda u: u.is_superuser)
 def add(request):
     if request.method == 'POST':
         # Get previously saved book data in sessions
@@ -72,7 +73,8 @@ def add(request):
         form = isbnForm()
         return render(request, 'add_book.html', {'form': isbnForm})
 
-
+@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def check(request):
     if request.method == 'GET':
         # Get ISBN from GET request
