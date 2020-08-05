@@ -44,23 +44,29 @@
         </nav>
         <!-- Dropdown menu buttons -->
         <div class="collapse navbar-collapse" id="navbarDisplayMenu">
-            <div class="navbar-nav text-center">
-                <a class="nav-item" type="button" href="{% url 'index' %}">
-                    <div class="btn btn-outline-dark menu-buttons">
-                        <p class="text-right font-weight-bold mb-0">home</p>
-                    </div>
-                </a>
-                <a class="nav-item" type="button" href="{% url 'books' %}">
-                    <div class="btn btn-outline-dark menu-buttons">
-                        <p class="text-right font-weight-bold mb-0">titles</p>
-                    </div>
-                </a>
-                <a class="nav-item mb-4" href="{% url 'authors' %}">
-                    <div class="btn btn-outline-dark menu-buttons">
-                        <p class="text-right font-weight-bold mb-0">authors</p>
-                    </div>
-                </a>
-            </div>
+            <ul class="navbar-nav text-center">
+                <li class="nav-item">
+                    <a class="nav-link" type="button" href="{% url 'index' %}">
+                        <div class="btn btn-outline-dark menu-buttons">
+                            <p class="text-right font-weight-bold mb-0">home</p>
+                        </div>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" type="button" href="{% url 'books' %}">
+                        <div class="btn btn-outline-dark menu-buttons">
+                            <p class="text-right font-weight-bold mb-0">titles</p>
+                        </div>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link mb-4" href="{% url 'authors' %}">
+                        <div class="btn btn-outline-dark menu-buttons">
+                            <p class="text-right font-weight-bold mb-0">authors</p>
+                        </div>
+                    </a>
+                </li>
+            </ul>
         </div>
         <div class="collapse" id="navbarToggleSearch">
             <div class="bg-white p-4">

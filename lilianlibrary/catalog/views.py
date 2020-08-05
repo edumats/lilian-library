@@ -152,7 +152,7 @@ class SearchView(generic.ListView):
         query = self.request.GET.get('search')
         return Book.objects.filter(
             Q(title__icontains=query) | Q(authors__name__icontains=query)
-        )
+        ).distinct('title')
 
 class BookListView(generic.ListView):
     model = Book
