@@ -21,7 +21,7 @@ body {
 }
 
 .img-container {
-    
+
     overflow: hidden;
     /* Content minus the navbar height */
 
@@ -142,7 +142,7 @@ a {
 }
 
 a:hover {
-    color: DarkGray;
+    /* color: DarkGray; */
 }
 
 /* For book list page */
