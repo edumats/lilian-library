@@ -1,80 +1,95 @@
 import os, requests, json
 from random import sample
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import generic
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Q
 from .models import Book, Author, BookInstance, Genre, Language, Publisher, Quote, Tag
 from .forms import isbnForm, bookNoteForm, tagForm
+from django.core.mail import send_mail
+
+def mail(request):
+    send_mail(
+    'Testing 123',
+    'My message is here',
+    'Eduardo Mats',
+    ['poneis88@hotmail.com'],
+    fail_silently=False,
+)
+    return render(request, 'index.html')
 
 def index(request):
     return render(request, 'index.html')
 
-@login_required
-@user_passes_test(lambda u: u.is_superuser)
+
 def add(request):
     if request.method == 'POST':
-        # Get previously saved book data in sessions
-        book_data = request.session['scanned_book']
-        # Get ISBN 10
-        isbn_10 = book_data['isbn_10']
-        # Get ISBN 13
-        isbn_13 = book_data['isbn_13']
+        if request.user.is_superuser:
+            # Get previously saved book data in sessions
+            book_data = request.session['scanned_book']
+            # Get ISBN 10
+            isbn_10 = book_data['isbn_10']
+            # Get ISBN 13
+            isbn_13 = book_data['isbn_13']
 
-        # Check if book already exists in database
-        if Book.objects.filter(isbn_10=isbn_10).exists() or Book.objects.filter(isbn_13=isbn_13).exists():
-            return render(request, 'confirm_book.html', {'success': False, 'message': 'This book already exists in the library'})
+            # Check if book already exists in database
+            if Book.objects.filter(isbn_10=isbn_10).exists() or Book.objects.filter(isbn_13=isbn_13).exists():
+                return render(request, 'confirm_book.html', {'success': False, 'message': 'This book already exists in the library'})
 
-        # Finds or creates Publisher instance
-        publisher, created = Publisher.objects.get_or_create(name=book_data['publisher'])
+            # Finds or creates Publisher instance
+            publisher, created = Publisher.objects.get_or_create(name=book_data['publisher'])
 
-        # Finds or creates Language instance
-        language, created = Language.objects.get_or_create(name=book_data['language'])
+            # Finds or creates Language instance
+            language, created = Language.objects.get_or_create(name=book_data['language'])
 
-        # Creates Book instance
-        book = Book.objects.create(
-            title=book_data['title'],
-            number_pages=book_data['pages'],
-            description=book_data['description'],
-            isbn_10=isbn_10,
-            isbn_13=book_data['isbn_13'],
-            thumbnail=book_data['thumbnail'],
-            ratings_count=book_data['ratings_count'],
-            average_rating=book_data['average_rating'],
-            publisher=publisher,
-            language=language,
-            google_id=book_data['google_id'],
-        )
+            # Creates Book instance
+            book = Book.objects.create(
+                title=book_data['title'],
+                number_pages=book_data['pages'],
+                description=book_data['description'],
+                isbn_10=isbn_10,
+                isbn_13=book_data['isbn_13'],
+                thumbnail=book_data['thumbnail'],
+                ratings_count=book_data['ratings_count'],
+                average_rating=book_data['average_rating'],
+                publisher=publisher,
+                language=language,
+                google_id=book_data['google_id'],
+            )
 
-        # Iterate over authors list
-        for author in book_data['authors']:
-            writer, created = Author.objects.get_or_create(name=author)
-            book.authors.add(writer)
+            # Iterate over authors list
+            for author in book_data['authors']:
+                writer, created = Author.objects.get_or_create(name=author)
+                book.authors.add(writer)
 
-        # Iterate over book genres list
-        for category in book_data['categories']:
-            genre, created = Genre.objects.get_or_create(name=category)
-            book.genre.add(genre)
+            # Iterate over book genres list
+            for category in book_data['categories']:
+                genre, created = Genre.objects.get_or_create(name=category)
+                book.genre.add(genre)
 
-        # Create a BookInstance
-        book_instance = BookInstance.objects.create(book=book)
+            # Create a BookInstance
+            book_instance = BookInstance.objects.create(book=book)
 
-        form = isbnForm()
+            form = isbnForm()
 
-        context = {
-            'success': True,
-            'form': isbnForm,
-            'message': 'Book was successfuly added',
-        }
-        return render(request, 'add_book.html', context)
+            context = {
+                'success': True,
+                'form': isbnForm,
+                'message': 'Book was successfuly added',
+            }
+            return render(request, 'add_book.html', context)
+
+        else:
+            # If not superuser
+
+            return redirect('/accounts/login/?next=%s' % request.path, {'message': 'Action not allowed for this user type. Please log in with the appropriate user'})
 
     else:
         # For GET requests
         form = isbnForm()
         return render(request, 'add_book.html', {'form': isbnForm})
 
-@login_required
-@user_passes_test(lambda u: u.is_superuser)
+
 def check(request):
     if request.method == 'GET':
         # Get ISBN from GET request

@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'cg#p$g+j9tax!#a3cup@1$8obt2_+&k3q+pmu
 # DEBUG = True
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = ['lilian-library.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = ['lilian-library.herokuapp.com', '127.0.0.1', '.ngrok.io']
 
 
 # Application definition
@@ -131,7 +131,13 @@ STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = '/'
 
 # Logs password resets to console
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'eduardo.mats@gmail.com'
+EMAIL_HOST_PASSWORD = 'xitutwbospnflkvv'
+EMAIL_USE_SSL = False
 
 # Heroku: Update database configuration from $DATABASE_URL.
 import dj_database_url
