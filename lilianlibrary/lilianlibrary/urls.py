@@ -23,7 +23,7 @@ from catalog import views as catalog_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('catalog/', include('catalog.urls')),
-    path('mail/', catalog_views.mail, name='mail'),
+    # path('mail/', catalog_views.mail, name='mail'),
     path('', RedirectView.as_view(url='catalog/')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 

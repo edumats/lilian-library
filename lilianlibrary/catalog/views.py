@@ -6,17 +6,17 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Q
 from .models import Book, Author, BookInstance, Genre, Language, Publisher, Quote, Tag
 from .forms import isbnForm, bookNoteForm, tagForm
-from django.core.mail import send_mail
+# from django.core.mail import send_mail
 
-def mail(request):
-    send_mail(
-    'Testing 123',
-    'My message is here',
-    'Eduardo Mats',
-    ['poneis88@hotmail.com'],
-    fail_silently=False,
-)
-    return render(request, 'index.html')
+# def mail(request):
+#     send_mail(
+#     'Testing 123',
+#     'My message is here',
+#     'Eduardo Mats',
+#     ['poneis88@hotmail.com'],
+#     fail_silently=False,
+# )
+#     return render(request, 'index.html')
 
 def index(request):
     return render(request, 'index.html')
